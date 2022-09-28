@@ -1,0 +1,236 @@
+{
+  "project_info": {
+    "project_number": "1072381182988",
+    "firebase_url": "https://genius-shooter.firebaseio.com",
+    "project_id": "genius-shooter",
+    "storage_bucket": "genius-shooter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1072381182988:android:d8ceef18f4e3125d205a29",
+        "android_client_info": {
+          "package_name": "com.sagi.barrett"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1072381182988-dmcmlcsqjd02jsvofv4cf83t71nqd3b5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sagi.barrett",
+            "certificate_hash": "1cf2424990471c375fc27acebcff0a021c5b00e9"
+          }
+        },
+        {
+          "client_id": "1072381182988-r8th5dtgrb8vat0tm6nmoeu6sg447cve.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sagi.barrett",
+            "certificate_hash": "874f70f454531af64c6bda67bd026dddc9fee3d5"
+          }
+        },
+        {
+          "client_id": "1072381182988-s4jph5sdei6bb01uijbt3rev2v968edu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB65_WuW7WIeuGTV6LJCf2xIebK1HQ1YY8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1072381182988-s4jph5sdei6bb01uijbt3rev2v968edu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1072381182988-5r287p7cm3g9a9tgsv7bjnjebdctcchc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.sagi.barrettcn",
+                "app_store_id": "1541292758"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1072381182988:android:94afe339dbb72ecb205a29",
+        "android_client_info": {
+          "package_name": "com.sagi.barrett.test1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1072381182988-s4jph5sdei6bb01uijbt3rev2v968edu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB65_WuW7WIeuGTV6LJCf2xIebK1HQ1YY8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1072381182988-s4jph5sdei6bb01uijbt3rev2v968edu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1072381182988-5r287p7cm3g9a9tgsv7bjnjebdctcchc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.sagi.barrettcn",
+                "app_store_id": "1541292758"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1072381182988:android:8f24709f36e9b7d8205a29",
+        "android_client_info": {
+          "package_name": "com.sagi.barrettc2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1072381182988-c37p7cpmbms2emuthrqtb66pedofqs5f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sagi.barrettc2",
+            "certificate_hash": "676ac73d3bc4775760d6f3b803ec60653a9d06f7"
+          }
+        },
+        {
+          "client_id": "1072381182988-s4jph5sdei6bb01uijbt3rev2v968edu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB65_WuW7WIeuGTV6LJCf2xIebK1HQ1YY8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1072381182988-s4jph5sdei6bb01uijbt3rev2v968edu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1072381182988-5r287p7cm3g9a9tgsv7bjnjebdctcchc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.sagi.barrettcn",
+                "app_store_id": "1541292758"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1072381182988:android:04271d9526e52899205a29",
+        "android_client_info": {
+          "package_name": "com.sagi.barrettcn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1072381182988-pil4b6clb04s4g73bcjq7ouo9rduvq0s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sagi.barrettcn",
+            "certificate_hash": "1cf2424990471c375fc27acebcff0a021c5b00e9"
+          }
+        },
+        {
+          "client_id": "1072381182988-s4jph5sdei6bb01uijbt3rev2v968edu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB65_WuW7WIeuGTV6LJCf2xIebK1HQ1YY8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1072381182988-s4jph5sdei6bb01uijbt3rev2v968edu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1072381182988-5r287p7cm3g9a9tgsv7bjnjebdctcchc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.sagi.barrettcn",
+                "app_store_id": "1541292758"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1072381182988:android:2dcfd2853c3ae7d8205a29",
+        "android_client_info": {
+          "package_name": "com.sagi.barrettcn.test1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1072381182988-4be9rrbvbnkg5d6spv5ifbott1c9ght0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sagi.barrettcn.test1",
+            "certificate_hash": "1cf2424990471c375fc27acebcff0a021c5b00e9"
+          }
+        },
+        {
+          "client_id": "1072381182988-s4jph5sdei6bb01uijbt3rev2v968edu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB65_WuW7WIeuGTV6LJCf2xIebK1HQ1YY8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1072381182988-s4jph5sdei6bb01uijbt3rev2v968edu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1072381182988-5r287p7cm3g9a9tgsv7bjnjebdctcchc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.sagi.barrettcn",
+                "app_store_id": "1541292758"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

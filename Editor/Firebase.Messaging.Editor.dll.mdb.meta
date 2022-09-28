@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 2a12834ebe7ce9e4da0c2d408d6fbb9d
+labels:
+- gvh
+- gvh_rename_to_disable
+- gvh_targets-editor
+- gvh_version-7.1.0
+- gvhp_exportpath-Firebase/Editor/Firebase.Messaging.Editor.dll.mdb
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
