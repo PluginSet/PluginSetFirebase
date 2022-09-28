@@ -1,5 +1,4 @@
 #if ENABLE_FIREBASE_LOGIN
-
 using System;
 using System.Collections.Generic;
 using Firebase.Auth;
@@ -11,6 +10,17 @@ namespace PluginSet.Firebase
 {
     public partial class PluginFirebase: ILoginPlugin
     {
+        [Serializable]
+        public class LoginData
+        {
+            [SerializeField]
+            public string userId;
+            [SerializeField]
+            public string nickName;
+            [SerializeField]
+            public string token;
+        }
+        
         private FirebaseAuth _firebaseAuth;
         private FirebaseUser _localUser;
 
@@ -24,14 +34,8 @@ namespace PluginSet.Firebase
 #endif
             } 
         }
-        public bool IsLoginSupported => true;
-        public bool AutoLogin => true;
+        
         private string _loginData;
-
-        //public void Login(Action<Result> callback = null)
-        //{
-
-        //}
 
         public void Logout(Action<Result> callback = null)
         {
@@ -39,7 +43,7 @@ namespace PluginSet.Firebase
             _loginData = string.Empty;
         }
 
-        public string GetUserInfo()
+        public string GetUserLoginData()
         {
             return IsLoggedIn ? _loginData : "{}";
         }
@@ -47,7 +51,7 @@ namespace PluginSet.Firebase
         /// <summary>
         /// 记录登录回调的事件
         /// </summary>
-        private List<Action<Result>> _loginCallbacks = new List<Action<Result>>();
+        private readonly List<Action<Result>> _loginCallbacks = new List<Action<Result>>();
 
         public void Login(Action<Result> callback = null)
         {
@@ -55,34 +59,36 @@ namespace PluginSet.Firebase
                 _loginCallbacks.Add(callback);
 
             _firebaseAuth = FirebaseAuth.DefaultInstance;
+            
+            Logger.Debug($"Login >>>>>>>>>>>>>>>>>>>>>>>  {_localUser}");
             if (_localUser != null && _firebaseAuth.CurrentUser != null)
             {
-                OnFirebaseAuthStateChange(null,null);
+                GetToken(_localUser);
                 return;
             }
 
+            Logger.Debug($"Login Google ======================= ");
             //因为play game 给集成到gamecenter 里面去了,所有这里需要接入gamecenter的gp登陆
-            _managerInstance.LoginWith("GameCenter", delegate(Result result)
+            _managerInstance.LoginWith("Google", delegate(Result result)
             {
+                Logger.Debug($"Login Google result ======================= {result.Success}, {result.Code}, {result.Data}");
                 if (!result.Success)
                 {
                     Logger.Debug($"fireabse login faill {result.Code} {result.Error}");
-                    OnLoginFail(0, callback);
+                    OnLoginFail(PluginConstants.FailDefaultCode, callback);
                     return;
                 }
 
-                //_localUser = _firebaseAuth.CurrentUser;
-                //_loginData = result.LoginData.UserId;
-                //OnLoginResult(result);
-
-                ///拿到gp的token 然后去获取credential去登录firebase
-                Credential credential = PlayGamesAuthProvider.GetCredential(result.LoginData.Token);
+                // 拿到gp的token 然后去获取credential去登录firebase
+                var loginData = (PluginSet.Google.PluginGoogle.LoginData) result.DataObject;
+                var credential = PlayGamesAuthProvider.GetCredential(loginData.code);
                 Logger.Debug($"Login: GooglePlay Credential：{credential}");
                 _firebaseAuth.SignInWithCredentialAsync(credential).ContinueWithOnMainThread(task =>
                 {
+                    Logger.Debug($"Login: sign in {task.IsCanceled} {task.IsFaulted} {task.Exception}");
                     if (task.IsCanceled)
                     {
-                        OnLoginFail(1);
+                        OnLoginFail(PluginConstants.CancelCode);
                         return;
                     }
 
@@ -101,44 +107,6 @@ namespace PluginSet.Firebase
                 });
             });
         }
-        
-        /// <summary>
-        /// 响应登陆完成的回调事件
-        /// </summary>
-        /// <param name="result"></param>
-        private void OnLoginResult(in Result result)
-        {
-            foreach (var callback in _loginCallbacks)
-            {
-                callback.Invoke(result);
-            }
-            _loginCallbacks.Clear();
-        }
-
-        //private void FillSuccessResult(ref Result result)
-        //{
-        //    result.Success = true;
-        //    result.PluginName = Name;
-
-            //result.UserInfo = new UserInfo
-            //{
-            //    UserId = _localUser.UserId,
-            //    NickName = _localUser.DisplayName
-            //};
-        //}
-
-        /// <summary>
-        /// 登录成功
-        /// </summary>
-        /// <param name="result"></param>
-        /// <param name="callback"></param>
-        private void OnLoginSuccess(Result result, Action<Result> callback = null)
-        {
-            //FillSuccessResult(ref result);
-            //OnLoginResult(result);
-            Logger.Debug("OnLoginSuccess");
-            callback?.Invoke(result);
-        }
 
         /// <summary>
         /// 登录成功
@@ -149,10 +117,11 @@ namespace PluginSet.Firebase
             Logger.Debug("OnLoginSuccessList");
             if (_loginCallbacks != null)
             {
-                for (int i = 0;i < _loginCallbacks.Count; i++)
+                foreach (var t in _loginCallbacks)
                 {
-                    _loginCallbacks[i]?.Invoke(result);
+                    t?.Invoke(result);
                 }
+
                 _loginCallbacks.Clear();
             }
         }
@@ -160,20 +129,21 @@ namespace PluginSet.Firebase
         /// <summary>
         /// 登录失败
         /// </summary>
-        /// <param name="result"></param>
+        /// <param name="errorCode"></param>
         private void OnLoginFailList(int errorCode = 0)
         {
             if (_loginCallbacks != null)
             {
-                for (int i = 0; i < _loginCallbacks.Count; i++)
+                foreach (var t in _loginCallbacks)
                 {
-                    _loginCallbacks[i]?.Invoke(new Result
+                    t?.Invoke(new Result
                     {
                         Success = false,
                         PluginName = Name,
                         Code = errorCode
                     });
                 }
+
                 _loginCallbacks.Clear();
             }
         }
@@ -192,19 +162,18 @@ namespace PluginSet.Firebase
                 Code = errorCode
             });
 
-            Logger.Error($"登录失败 code {errorCode} name {Name}");
+            Logger.Debug($"登录失败 code {errorCode} name {Name}");
         }
 
         /// <summary>
         /// firebase 切换账号了
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="_"></param>
+        /// <param name="eventArgs"></param>
         void OnFirebaseAuthStateChange(object sender, System.EventArgs eventArgs)
         {
             _firebaseAuth = FirebaseAuth.DefaultInstance;
             var currentUser = _firebaseAuth.CurrentUser;
-            //_localUser = currentUser;
 
             if (_localUser != null)
                 Logger.Debug("OnFirebaseAuthStateChange ::: userId:{0}, userName:{1}", _localUser.UserId, _localUser.DisplayName);
@@ -219,22 +188,14 @@ namespace PluginSet.Firebase
                     Logger.Debug("Signed out " + _localUser.UserId);
                 }
                 _localUser = _firebaseAuth.CurrentUser;
-                _loginData = _localUser.UserId;
+                _loginData = _localUser?.UserId;
+                
                 if (signedIn)
                 {
-                    Logger.Debug("Signed in " + _localUser.UserId);
-                    //OnLoginResult(new Result
-                    //{
-                    //    Success = true,
-                    //    PluginName = Name,
-                    //});
+                    _loginData = null;
+                    Logger.Debug("OnFirebaseAuthStateChange args: {0}", eventArgs.ToString());
+                    SendNotification(PluginConstants.NOTIFY_LOGIN_STATUS_CHANGED, eventArgs.ToString());
                 }
-
-                GetToken(_localUser);
-            }
-            else
-            {
-                GetToken(_localUser);
             }
         }
 
@@ -242,16 +203,18 @@ namespace PluginSet.Firebase
         /// 获取token
         /// </summary>
         /// <param name="currentUser"></param>
-        /// <param name="callback"></param>
         public void GetToken(FirebaseUser currentUser)
         {
+            Logger.Debug($"GetToken user >>> {currentUser}");
             if (currentUser == null)
             {
                 OnLoginFailList(5);
                 return;
             }
+            
             currentUser.TokenAsync(true).ContinueWithOnMainThread(task =>
             {
+                Logger.Debug($"GetToken user token task >>> {task.IsCanceled} {task.IsFaulted}, {task.Exception}");
                 if (task.IsCanceled)
                 {
                     OnLoginFailList(3);
@@ -268,16 +231,19 @@ namespace PluginSet.Firebase
                 //_loginData = _localUser.UserId;
                 string idToken = task.Result;
                 Logger.Debug($"Login GetToken{idToken}");
+                var loginData = new LoginData
+                {
+                    userId = _localUser.UserId,
+                    nickName = _localUser.DisplayName,
+                    token = idToken,
+                };
                 OnLoginSuccessList(new Result
                 {
                     Success = true,
                     PluginName = Name,
-                    LoginData = new LoginResult
-                    {
-                        UserId = _localUser.UserId,
-                        NickName = _localUser.DisplayName,
-                        Token = idToken,
-                    }
+                    Code = PluginConstants.SuccessCode,
+                    Data = JsonUtility.ToJson(loginData),
+                    DataObject = loginData,
                 });
             });
         }

@@ -21,8 +21,8 @@ namespace PluginSet.Firebase.Editor
         static FirebasePluginsFilter()
         {
             PluginFilter.RegisterFilter("com.pluginset.firebase/Plugins", FilterPlugin);
+            PluginFilter.RegisterFilter("com.pluginset.firebase/Plugins/dotNet45", FilterPlugin);
             PluginFilter.RegisterFilter("com.pluginset.firebase/Plugins/iOS", FilterPlugin);
-            PluginFilter.RegisterFilter("com.pluginset.firebase/Plugins/iOS/Plugin", FilterPlugin);
             PluginFilter.RegisterFilter("com.pluginset.firebase/Plugins/iOS/Firebase", FilterPlugin);
             PluginFilter.RegisterFilter("com.pluginset.firebase/Plugins/x84_64", FilterPlugin);
         }

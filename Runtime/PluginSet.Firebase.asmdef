@@ -1,7 +1,9 @@
 {
     "name": "PluginSet.Firebase",
+    "rootNamespace": "",
     "references": [
-        "PluginSet.Core"
+        "PluginSet.Core",
+        "PluginSet.Google"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
