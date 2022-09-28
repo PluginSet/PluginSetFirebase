@@ -1,4 +1,4 @@
-﻿﻿#if ENABLE_FIREBASE
+﻿﻿﻿#if ENABLE_FIREBASE
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -74,19 +74,15 @@ namespace PluginSet.Firebase
                 if (dependencyStatus == DependencyStatus.Available)
                 {
                     Logger.Debug("CheckAndFixDependenciesAsync complete");
-#if !UNITY_EDITOR && UNITY_IOS
-                    _appInstance = FirebaseApp.DefaultInstance;
-#else
-                    var json = "{}";
 #if UNITY_EDITOR
+                    var json = "{}";
                     var desktopFile = Path.Combine(Application.streamingAssetsPath, "google-services-desktop.json");
-#else
-                    var desktopFile = Path.Combine(Application.streamingAssetsPath, "google-services.json");
-#endif
                     if (File.Exists(desktopFile))
                         json = File.ReadAllText(desktopFile);
 
                     _appInstance = FirebaseApp.Create(AppOptions.LoadFromJsonConfig(json), "Editor");
+#else
+                    _appInstance = FirebaseApp.DefaultInstance;
 #endif
                     InitFirebase();
 

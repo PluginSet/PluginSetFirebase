@@ -78,16 +78,21 @@ namespace PluginSet.Firebase.Editor
             if (!buildParams.Enable)
                 return;
 
-            var serverToPath = Path.Combine(projectManager.LibraryPath, "src", "main", "assets");
+            var serverToPath = Path.Combine(projectManager.LauncherPath, "src", "main", "assets");
             File.Copy(buildParams.GoogleServiceJson, Path.Combine(serverToPath, "google-services.json"), true);
 
             var node = projectManager.ProjectGradle.ROOT.GetOrCreateNode("allprojects/buildscript/dependencies");
             node.AppendContentNode("classpath 'com.google.firebase:firebase-crashlytics-gradle:2.1.1'");
+            node.AppendContentNode("classpath 'com.google.gms:google-services:4.3.13'");
             
             var root = projectManager.LauncherGradle.ROOT;
-            const string applyPlugin = "apply plugin: 'com.google.firebase.crashlytics'";
-            root.RemoveContentNode(applyPlugin);
-            root.InsertChildNode(new GradleContentNode(applyPlugin, root), 2);
+            const string applyPlugin1 = "apply plugin: 'com.google.firebase.crashlytics'";
+            root.RemoveContentNode(applyPlugin1);
+            root.InsertChildNode(new GradleContentNode(applyPlugin1, root), 2);
+            
+            const string applyPlugin2 = "apply plugin: 'com.google.gms.google-services'";
+            root.RemoveContentNode(applyPlugin2);
+            root.InsertChildNode(new GradleContentNode(applyPlugin2, root), 3);
             
 //            //加入firebase 性能工具的依赖
 //            var unityGradle = Path.Combine(projRootDir, "launcher", "build.gradle");
