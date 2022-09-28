@@ -78,8 +78,7 @@ namespace PluginSet.Firebase.Editor
             if (!buildParams.Enable)
                 return;
 
-            var serverToPath = Path.Combine(projectManager.LauncherPath, "src", "main", "assets");
-            File.Copy(buildParams.GoogleServiceJson, Path.Combine(serverToPath, "google-services.json"), true);
+            File.Copy(buildParams.GoogleServiceJson, Path.Combine(projectManager.LauncherPath, "google-services.json"), true);
 
             var node = projectManager.ProjectGradle.ROOT.GetOrCreateNode("allprojects/buildscript/dependencies");
             node.AppendContentNode("classpath 'com.google.firebase:firebase-crashlytics-gradle:2.1.1'");
