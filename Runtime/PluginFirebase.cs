@@ -108,7 +108,7 @@ namespace PluginSet.Firebase
 
         public void SetUserInfo(bool isNewUser, string userId, Dictionary<string, object> pairs = null)
         {
-            if (_userId.Equals(userId))
+            if (string.Equals(_userId, userId))
                 return;
             
             _userId = userId;
