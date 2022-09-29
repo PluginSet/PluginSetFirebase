@@ -25,16 +25,8 @@ namespace PluginSet.Firebase
         private FirebaseUser _localUser;
 
         public bool IsEnableLogin => true;
-        public bool IsLoggedIn { get 
-            {
-#if UNITY_EDITOR
-                return true;
-#else
-                return _loginData != null;
-#endif
-            } 
-        }
-        
+        public bool IsLoggedIn => _loginData != null;
+
         private string _loginData;
 
         public void Logout(Action<Result> callback = null)
