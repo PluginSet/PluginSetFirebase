@@ -30,6 +30,9 @@ namespace PluginSet.Firebase.Editor
             jsonFile = Path.Combine(Application.dataPath, "..", jsonFile);
             if (!File.Exists(jsonFile))
                 return;
+
+            if (!Directory.Exists(Application.streamingAssetsPath))
+                Directory.CreateDirectory(Application.streamingAssetsPath);
             
             File.Copy(jsonFile, desktopFile);
         }
