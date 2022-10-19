@@ -51,12 +51,12 @@ namespace PluginSet.Firebase.Editor
             CopyDependencyPath("AppDependencies.xml");
             CopyDependencyPath("CrashlyticsDependencies.xml");
             
-            if (buildParams.EnableFirebaseLogin)
+            if (context.BuildTarget == BuildTarget.iOS)
+            {
+                CopyDependencyPath("AuthDependencies.xml");
+            } else if (buildParams.EnableFirebaseLogin)
             {
                 context.Symbols.Add("ENABLE_FIREBASE_LOGIN");
-                CopyDependencyPath("AuthDependencies.xml");
-            } else if (context.BuildTarget == BuildTarget.iOS)
-            {
                 CopyDependencyPath("AuthDependencies.xml");
             }
 
