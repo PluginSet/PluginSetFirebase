@@ -29,7 +29,7 @@ namespace PluginSet.Firebase
 
         private string _loginData;
 
-        public void Logout(Action<Result> callback = null)
+        public void Logout(Action<Result> callback = null, string _ = null)
         {
             _localUser = null;
             _loginData = string.Empty;
@@ -45,7 +45,7 @@ namespace PluginSet.Firebase
         /// </summary>
         private readonly List<Action<Result>> _loginCallbacks = new List<Action<Result>>();
 
-        public void Login(Action<Result> callback = null)
+        public void Login(Action<Result> callback = null, string _ = null)
         {
             if (callback != null)
                 _loginCallbacks.Add(callback);

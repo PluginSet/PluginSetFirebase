@@ -41,6 +41,9 @@ namespace PluginSet.Firebase.Editor
         [OnSyncEditorSetting]
         public static void OnSyncEditorSetting(BuildProcessorContext context)
         {
+            if (context.BuildTarget != BuildTarget.Android && context.BuildTarget != BuildTarget.iOS)
+                return;
+        
             var buildParams = context.BuildChannels.Get<BuildFirebaseParams>("Firebase");
             if (!buildParams.Enable)
                 return;
@@ -119,13 +122,6 @@ namespace PluginSet.Firebase.Editor
             if (!buildParams.Enable)
                 return;
 
-            var xcodeProject = project.Project;
-#if UNITY_2019_3_OR_NEWER
-            string xcodeTarget = xcodeProject.GetUnityFrameworkTargetGuid();
-#else
-            string xcodeTarget = xcodeProject.TargetGuidByName("Unity-iPhone");
-#endif
-            
             File.Copy(buildParams.GoogleServicePlist, Path.Combine(project.ProjectPath, "GoogleService-Info.plist"), true);
 
 //            //云推送相关

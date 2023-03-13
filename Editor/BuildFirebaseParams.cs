@@ -7,6 +7,8 @@ using UnityEngine;
 namespace PluginSet.Firebase.Editor
 {
     [BuildChannelsParams("Firebase", "Firebase配置")]
+    [VisibleCaseBoolValue("SupportAndroid", true)]
+    [VisibleCaseBoolValue("SupportIOS", true)]
     public class BuildFirebaseParams: ScriptableObject
     {
         [Tooltip("是否启用Firebase插件")]
