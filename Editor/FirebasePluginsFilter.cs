@@ -9,7 +9,7 @@ namespace PluginSet.Firebase.Editor
     {
         private static bool FilterPlugin(string s, BuildProcessorContext context)
         {
-            var param = context.BuildChannels.Get<BuildFirebaseParams>("Firebase");
+            var param = context.BuildChannels.Get<BuildFirebaseParams>();
             if (!param.Enable)
             {
                 Debug.Log("Filter lib file :::::::  " + s);

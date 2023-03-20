@@ -44,7 +44,7 @@ namespace PluginSet.Firebase.Editor
             if (context.BuildTarget != BuildTarget.Android && context.BuildTarget != BuildTarget.iOS)
                 return;
         
-            var buildParams = context.BuildChannels.Get<BuildFirebaseParams>("Firebase");
+            var buildParams = context.BuildChannels.Get<BuildFirebaseParams>();
             if (!buildParams.Enable)
                 return;
 
@@ -67,7 +67,7 @@ namespace PluginSet.Firebase.Editor
             context.AddLinkAssembly("Firebase.Crashlytics");
             
             var pluginConfig = context.Get<PluginSetConfig>("pluginsConfig");
-            var config = pluginConfig.Get<PluginFirebaseConfig>("Firebase");
+            var config = pluginConfig.AddConfig<PluginFirebaseConfig>("Firebase");
             config.SessionTimeoutSeconds = buildParams.SessionTimeoutSeconds;
             config.MaxWaitInitDuration = buildParams.MaxWaitInitDuration;
             config.InternalEventMapping = TransferMapping(buildParams.InternalEventMapping);
@@ -77,7 +77,7 @@ namespace PluginSet.Firebase.Editor
         [AndroidProjectModify]
         public static void OnAndroidProjectModify(BuildProcessorContext context, AndroidProjectManager projectManager)
         {
-            var buildParams = context.BuildChannels.Get<BuildFirebaseParams>("Firebase");
+            var buildParams = context.BuildChannels.Get<BuildFirebaseParams>();
             if (!buildParams.Enable)
                 return;
 
@@ -118,7 +118,7 @@ namespace PluginSet.Firebase.Editor
         [iOSXCodeProjectModify]
         public static void ModifyXCodeProject(BuildProcessorContext context, PBXProjectManager project)
         {
-            var buildParams = context.BuildChannels.Get<BuildFirebaseParams>("Firebase");
+            var buildParams = context.BuildChannels.Get<BuildFirebaseParams>();
             if (!buildParams.Enable)
                 return;
 

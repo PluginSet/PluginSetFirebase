@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace PluginSet.Firebase
 {
-    [PluginSetConfig("Firebase")]
     public class PluginFirebaseConfig : ScriptableObject
     {
         public float SessionTimeoutSeconds;

@@ -47,7 +47,7 @@ namespace PluginSet.Firebase
 
         protected override void Init(PluginSetConfig config)
         {
-            _config = config.Get<PluginFirebaseConfig>("Firebase");
+            _config = config.Get<PluginFirebaseConfig>();
             eventNameMapping = new Dictionary<string, string>();
             parameterNameMapping = new Dictionary<string, string>();
             foreach (var kv in _config.InternalEventMapping.Pairs)

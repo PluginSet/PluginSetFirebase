@@ -14,7 +14,7 @@ namespace PluginSet.Firebase.Editor
                 return;
 
             var buildChannel = EditorSetting.CurrentBuildChannel;
-            var buildParams = buildChannel.Get<BuildFirebaseParams>("Firebase");
+            var buildParams = buildChannel.Get<BuildFirebaseParams>();
 
             if (buildParams == null || !buildParams.Enable)
                 return;
