@@ -9,7 +9,7 @@
     "firebase"
   ],
   "dependencies": {
-    "com.pluginset.core": "0.0.1"
+    "com.pluginset.core": "1.0.0"
   },
   "author": {
     "name": "LyenXiao",
