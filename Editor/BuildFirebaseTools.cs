@@ -1,9 +1,10 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using PluginSet.Core;
 using PluginSet.Core.Editor;
 using UnityEditor;
+using UnityEngine;
 
 namespace PluginSet.Firebase.Editor
 {
@@ -81,7 +82,11 @@ namespace PluginSet.Firebase.Editor
             if (!buildParams.Enable)
                 return;
 
-            File.Copy(buildParams.GoogleServiceJson, Path.Combine(projectManager.LauncherPath, "google-services.json"), true);
+            var jsonFile = buildParams.GoogleServiceJson;
+            if (string.IsNullOrEmpty(jsonFile) || !File.Exists(jsonFile = Path.Combine(Application.dataPath, "..", jsonFile)))
+                throw new BuildException($"Invalid GoogleServiceJson file \"{jsonFile}\"");
+                
+            File.Copy(jsonFile, Path.Combine(projectManager.LauncherPath, "google-services.json"), true);
 
             var node = projectManager.ProjectGradle.ROOT.GetOrCreateNode("allprojects/buildscript/dependencies");
             node.AppendContentNode("classpath 'com.google.firebase:firebase-crashlytics-gradle:2.1.1'");

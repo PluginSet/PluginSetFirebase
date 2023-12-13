@@ -29,6 +29,25 @@ namespace PluginSet.Firebase
 
         private string _loginData;
 
+        [FirebaseInitedExecutable]
+        private void InitFirebaseAuth()
+        {
+#if UNITY_EDITOR
+            _firebaseAuth = FirebaseAuth.GetAuth(_appInstance);
+#else
+            _firebaseAuth = FirebaseAuth.DefaultInstance;
+#endif
+            _firebaseAuth.StateChanged += OnFirebaseAuthStateChange;
+            OnFirebaseAuthStateChange(null, null);
+        }
+
+        [FirebaseDisposeExecutable]
+        private void ClearLoginState()
+        {
+            _firebaseAuth?.SignOut();
+            _localUser = null;
+        }
+
         public void Logout(Action<Result> callback = null, string _ = null)
         {
             _localUser = null;
@@ -72,31 +91,31 @@ namespace PluginSet.Firebase
                 }
 
                 // 拿到gp的token 然后去获取credential去登录firebase
-                var loginData = (PluginSet.Google.PluginGoogle.LoginData) result.DataObject;
-                var credential = PlayGamesAuthProvider.GetCredential(loginData.code);
-                Logger.Debug($"Login: GooglePlay Credential：{credential}");
-                _firebaseAuth.SignInWithCredentialAsync(credential).ContinueWithOnMainThread(task =>
-                {
-                    Logger.Debug($"Login: sign in {task.IsCanceled} {task.IsFaulted} {task.Exception}");
-                    if (task.IsCanceled)
-                    {
-                        OnLoginFail(PluginConstants.CancelCode);
-                        return;
-                    }
-
-                    if (task.IsFaulted)
-                    {
-                        OnLoginFail(2);
-                        return;
-                    }
-
-                    var user = task.Result;
-                    Logger.Debug("Firebase sign in success with user: {0}: {1}", user.UserId, user.DisplayName);
-
-                    _localUser = user;
-                    _loginData = _localUser.UserId;
-                    GetToken(_localUser);
-                });
+                // var loginData = (PluginSet.Google.PluginGoogle.LoginData) result.DataObject;
+                // var credential = PlayGamesAuthProvider.GetCredential(loginData.code);
+                // Logger.Debug($"Login: GooglePlay Credential：{credential}");
+                // _firebaseAuth.SignInWithCredentialAsync(credential).ContinueWithOnMainThread(task =>
+                // {
+                //     Logger.Debug($"Login: sign in {task.IsCanceled} {task.IsFaulted} {task.Exception}");
+                //     if (task.IsCanceled)
+                //     {
+                //         OnLoginFail(PluginConstants.CancelCode);
+                //         return;
+                //     }
+                //
+                //     if (task.IsFaulted)
+                //     {
+                //         OnLoginFail(2);
+                //         return;
+                //     }
+                //
+                //     var user = task.Result;
+                //     Logger.Debug("Firebase sign in success with user: {0}: {1}", user.UserId, user.DisplayName);
+                //
+                //     _localUser = user;
+                //     _loginData = _localUser.UserId;
+                //     GetToken(_localUser);
+                // });
             });
         }
 
@@ -238,23 +257,6 @@ namespace PluginSet.Firebase
                     DataObject = loginData,
                 });
             });
-        }
-
-        private void ClearLoginState()
-        {
-            _firebaseAuth?.SignOut();
-            _localUser = null;
-        }
-
-        private void InitFirebaseAuth()
-        {
-#if UNITY_EDITOR
-            _firebaseAuth = FirebaseAuth.GetAuth(_appInstance);
-#else
-            _firebaseAuth = FirebaseAuth.DefaultInstance;
-#endif
-            _firebaseAuth.StateChanged += OnFirebaseAuthStateChange;
-            OnFirebaseAuthStateChange(null, null);
         }
 
         /// <summary>
