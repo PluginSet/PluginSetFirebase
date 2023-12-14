@@ -17,7 +17,9 @@ namespace PluginSet.Firebase.Editor
             var buildParams = buildChannel.Get<BuildFirebaseParams>();
 
             if (buildParams == null || !buildParams.Enable)
+            {
                 return;
+            }
             
             var desktopFile = Path.Combine(Application.streamingAssetsPath, "google-services-desktop.json");
             if (File.Exists(desktopFile))
@@ -35,6 +37,7 @@ namespace PluginSet.Firebase.Editor
                 Directory.CreateDirectory(Application.streamingAssetsPath);
             
             File.Copy(jsonFile, desktopFile);
+            AssetDatabase.Refresh();
         }
     }
 }

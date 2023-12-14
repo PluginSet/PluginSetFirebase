@@ -78,6 +78,15 @@ namespace PluginSet.Firebase.Editor
         [AndroidProjectModify]
         public static void OnAndroidProjectModify(BuildProcessorContext context, AndroidProjectManager projectManager)
         {
+            var assetPath = Path.Combine(projectManager.LibraryPath, "src", "main", "assets");
+            var desktopFile = Path.Combine(assetPath, "google-services-desktop.json");
+            Debug.Log($"OnAndroidProjectModify >>>>>>>>>>>>>> :: {File.Exists(desktopFile)} :: {desktopFile}");
+            if (File.Exists(desktopFile))
+            {
+                File.SetAttributes(desktopFile, FileAttributes.Normal);
+                File.Delete(desktopFile);
+            }
+            
             var buildParams = context.BuildChannels.Get<BuildFirebaseParams>();
             if (!buildParams.Enable)
                 return;
