@@ -65,6 +65,7 @@ namespace PluginSet.Firebase
             }
 
             var list = new List<Parameter>();
+#if !UNITY_EDITOR
             foreach (var kv in eventData)
             {
                 var parameterName = kv.Key;
@@ -72,6 +73,7 @@ namespace PluginSet.Firebase
                     parameterName = p;
                 list.Add(new Parameter(parameterName, kv.Value.ToString()));
             }
+#endif
             LogEvent(eventName, list.ToArray());
         }
         
